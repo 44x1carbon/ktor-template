@@ -1,6 +1,4 @@
-import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.*
-import io.ktor.freemarker.FreeMarker
 import io.ktor.locations.Locations
 import io.ktor.routing.Routing
 import io.ktor.server.engine.*
@@ -19,9 +17,6 @@ fun main(args: Array<String>) {
     }
 
     val server = embeddedServer(Netty, port = 8080) {
-        install(FreeMarker) {
-            templateLoader = ClassTemplateLoader(this::class.java.classLoader, "templates")
-        }
         install(Locations)
         install(Routing) {
             web()
