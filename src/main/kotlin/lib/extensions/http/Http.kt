@@ -1,6 +1,7 @@
 package lib.extensions.http
 
 import io.ktor.http.Parameters
+import io.ktor.util.ConversionService
 import io.ktor.util.DefaultConversionService
 import java.lang.reflect.Type
 import kotlin.reflect.KClass
@@ -20,7 +21,7 @@ inline fun <reified T: Any?> Parameters.to(): T {
     return constructor.callBy(arguments) as T
 }
 
-fun Parameters.conversionValue(name: String, type: Type): Any?{
+fun Parameters.conversionValue(name: String, type: Type, conversionService: ConversionService = DefaultConversionService): Any?{
     val values = getAll(name)
-    return values?.let { DefaultConversionService.fromValues(values, type) }
+    return values?.let { conversionService.fromValues(values, type) }
 }
