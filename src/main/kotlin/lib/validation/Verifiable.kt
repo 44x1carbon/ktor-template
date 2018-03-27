@@ -2,7 +2,6 @@ package lib.validation
 
 import lib.validation.rules.Rule
 import kotlin.reflect.KProperty1
-import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.memberProperties
 
 interface Verifiable {
@@ -16,7 +15,4 @@ interface Verifiable {
 
     private val validateProperties: List<KProperty1<Verifiable, Any?>>
         get() = this::class.memberProperties.filter { Verifiable::class.memberProperties.map { it.name }.contains(it.name).not() }.map { it as KProperty1<Verifiable, Any?> }
-
-    private val KProperty1<out Verifiable, Any?>.validateName: String
-        get() = findAnnotation<ValidationProperty>()!!.name
 }
